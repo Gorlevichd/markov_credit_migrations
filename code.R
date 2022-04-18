@@ -9,6 +9,9 @@ state <- statetable.msm(Curr.Rtg, Company.Name, data = S_P)
 #rownames(state) = c("AAA-A", "BBB-B", "CCC-C")
 state
 
+# эта функци€ нужна дл€ того, чтобы перерассчитывает временные промежутки 
+# между переходами
+# ѕри генерации дл€ отдельных лет там врем€ каждый раз рассчитываетс€ с нул€
 calculate_years <- function(dataframe) {
   dataframe["Date"] = as.Date(dataframe$Date)
   dataframe <- dataframe %>%
@@ -37,7 +40,8 @@ Q <- rbind(c(1, 1, 1, 1, 1),
 Q.crude <- crudeinits.msm(Curr.Rtg ~ years, Company.Name, data = S_P, qmatrix = Q)
 cav.msm <- msm(Curr.Rtg ~ years, subject = Company.Name, data = S_P, qmatrix = Q.crude,
                deathexact = 5, control = list(fnscale = 4000, trace = 2, REPORT = 1,
-                                               maxit = 300))
+                                              reltol = 1e-16,
+                                              maxit = 10000))
 pmatrix.msm(cav.msm)
 pheatmap(pmatrix.msm(cav.msm), display_numbers = T, cluster_rows = F, cluster_cols = F)
 
@@ -125,8 +129,8 @@ S_P_GDP_train
 Q.crude <- crudeinits.msm(Curr.Rtg ~ years, Company.Name, data = S_P_GDP_train, qmatrix = Q)
 cav_gdp.msm <- msm(Curr.Rtg ~ years, subject = Company.Name, data = S_P_GDP_train, 
                qmatrix = Q.crude, deathexact = 5,
-               control = list(fnscale = 4000, trace = 2, REPORT = 1, maxit = 3000, 
-                              reltol = 1e-12),
+               control = list(fnscale = 4000, trace = 2, REPORT = 1, maxit = 10000, 
+                              reltol = 1e-16),
                covariates = ~GDP)
 cav_gdp.msm
 
@@ -162,7 +166,9 @@ S_P_CDS_train = S_P_CDS[S_P_CDS$Year < y, ]
 Q.crude <- crudeinits.msm(Curr.Rtg ~ years, Company.Name, data = S_P_CDS_train, qmatrix = Q)
 cav_cds.msm <- msm(Curr.Rtg ~ years, subject = Company.Name, data = S_P_CDS_train, 
                qmatrix = Q.crude, deathexact = 5, 
-               control = list(fnscale = 4000, trace = 2, REPORT = 1, maxit = 300),
+               control = list(fnscale = 4000, trace = 2, REPORT = 1,
+                              reltol = 1e-16,
+                              maxit = 10000),
                covariates = ~PX_LAST)
 cav_cds.msm
 S_P_CDS["Year"] <- format(as.Date(S_P_CDS$Date), format = "%Y")
