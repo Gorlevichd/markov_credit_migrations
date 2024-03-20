@@ -1,13 +1,3 @@
-# vkr
+# Markov Credit Migrations
 
-Репозиторий содержит:
-
-* ВКР.ipynb - код работы.
-
-* USA 2000 - 2009 - Папка с xlsx файлами с рейтингами переходами по кварталам за 2000 - 2009 годы для заемщиков США
-
-* USA 2010 - 2018 - Папка c xlsx файлами с рейтингами по кварталам за 2010 - 2018 год для заемщиков США
-
-* Updated Bloomberg ratings - Папка с xlsx файлами с рейтингами по кварталам за 2018 - 2021 годы для заемщиков США
-
-* data - Папка содержит xlsx файлы с квартальным ВВП за период с 1947 по 2022 годы и ценой индекса CDX IG CDSI GEN 5Y Corp с 2011 по 2021. 
+Module implements duration-approach Markov transition matrix modelling for credit ratings of S&P ratings
