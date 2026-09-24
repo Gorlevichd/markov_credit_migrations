@@ -1,0 +1,20 @@
+# Private source datasets
+*.xlsx
+*.xls
+*.csv
+data/
+USA 2000-2009/
+USA 2010-2018/
+Updated Bloomberg ratings/
+
+# Python build and test artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+.venv/
+venv/
+
+# Notebooks and generated checkpoints
+*.ipynb
+.ipynb_checkpoints/
